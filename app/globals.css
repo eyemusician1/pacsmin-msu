@@ -22,7 +22,7 @@
     --muted: 220 89% 94%; /* Navy-100 */
     --muted-foreground: 220 89% 40%; /* Mid-navy for muted text */
 
-    --accent: 160 100% 60%; /* Teal-400 */
+    --accent: 40 100% 50%; /* Gold-500 */
     --accent-foreground: 220 89% 15%; /* Navy-900 */
 
     --destructive: 0 84.2% 60.2%;
@@ -47,17 +47,17 @@
     --color-navy-900: 220 89% 15%;
     --color-navy-950: 220 89% 10%;
 
-    /* Custom Teal Accent Palette */
-    --color-teal-50: 160 100% 98%;
-    --color-teal-100: 160 100% 90%;
-    --color-teal-200: 160 100% 80%;
-    --color-teal-300: 160 100% 70%;
-    --color-teal-400: 160 100% 60%;
-    --color-teal-500: 160 100% 50%;
-    --color-teal-600: 160 100% 40%;
-    --color-teal-700: 160 100% 30%;
-    --color-teal-800: 160 100% 20%;
-    --color-teal-900: 160 100% 10%;
+    /* Custom Gold Accent Palette (replacing Teal) */
+    --color-gold-50: 40 100% 98%;
+    --color-gold-100: 40 100% 90%;
+    --color-gold-200: 40 100% 80%;
+    --color-gold-300: 40 100% 70%;
+    --color-gold-400: 40 100% 60%;
+    --color-gold-500: 40 100% 50%; /* Main Gold */
+    --color-gold-600: 40 100% 40%;
+    --color-gold-700: 40 100% 30%;
+    --color-gold-800: 40 100% 20%;
+    --color-gold-900: 40 100% 10%;
   }
 
   .dark {
@@ -79,7 +79,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 217.2 32.6% 17.5%; /* Dark mode accent will align with secondary for simplicity */
     --accent-foreground: 210 20% 98%;
 
     --destructive: 0 62.8% 30.6%;
