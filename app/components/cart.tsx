@@ -17,7 +17,7 @@ interface CartItem {
 
 interface CartProps {
   cart: CartItem[]
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>
+  setCart: (cart: CartItem[]) => void
 }
 
 export function Cart({ cart, setCart }: CartProps) {
@@ -26,12 +26,12 @@ export function Cart({ cart, setCart }: CartProps) {
   const [showReceipt, setShowReceipt] = useState(false);
 
   const updateQuantity = (id: number, change: number) => {
-    setCart((prevCart: CartItem[]) =>
-      prevCart.map((item: CartItem) =>
+    setCart(prevCart =>
+      prevCart.map(item =>
         item.id === id
           ? { ...item, quantity: Math.max(0, item.quantity + change) }
           : item
-      ).filter((item: CartItem) => item.quantity > 0)
+      ).filter(item => item.quantity > 0)
     )
   }
 
