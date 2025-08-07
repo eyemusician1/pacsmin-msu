@@ -52,7 +52,41 @@ export default function UniversityPortal() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-navy-100 font-sans relative overflow-hidden">
+      {/* Chemistry-Themed SVG Background with animated molecules/flasks/atoms */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {/* Atom */}
+        <div className="absolute left-4 top-8 animate-float-slow opacity-30">
+          <svg width="60" height="60" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="18" stroke="#FFD700" strokeWidth="3" fill="#FFFBEA" />
+            <ellipse cx="40" cy="40" rx="28" ry="10" stroke="#1e293b" strokeWidth="1.5" fill="none" />
+            <ellipse cx="40" cy="40" rx="10" ry="28" stroke="#1e293b" strokeWidth="1.5" fill="none" transform="rotate(60 40 40)" />
+            <ellipse cx="40" cy="40" rx="10" ry="28" stroke="#1e293b" strokeWidth="1.5" fill="none" transform="rotate(-60 40 40)" />
+            <circle cx="40" cy="22" r="3" fill="#FFD700" />
+            <circle cx="58" cy="40" r="3" fill="#FFD700" />
+            <circle cx="40" cy="58" r="3" fill="#FFD700" />
+            <circle cx="22" cy="40" r="3" fill="#FFD700" />
+          </svg>
+        </div>
+        {/* Molecule */}
+        <div className="absolute right-8 top-16 animate-float opacity-20">
+          <svg width="70" height="40" viewBox="0 0 70 40" fill="none">
+            <circle cx="10" cy="20" r="8" fill="#e0e7ff" stroke="#1e293b" strokeWidth="2" />
+            <circle cx="35" cy="10" r="6" fill="#fef9c3" stroke="#FFD700" strokeWidth="2" />
+            <circle cx="60" cy="30" r="7" fill="#fffbea" stroke="#FFD700" strokeWidth="2" />
+            <line x1="18" y1="20" x2="29" y2="12" stroke="#1e293b" strokeWidth="2" />
+            <line x1="41" y1="13" x2="53" y2="27" stroke="#FFD700" strokeWidth="2" />
+          </svg>
+        </div>
+        {/* Flask */}
+        <div className="absolute left-1/2 bottom-8 animate-float opacity-25">
+          <svg width="50" height="60" viewBox="0 0 50 60" fill="none">
+            <rect x="20" y="10" width="10" height="25" rx="5" fill="#e0e7ff" stroke="#1e293b" strokeWidth="2" />
+            <ellipse cx="25" cy="45" rx="15" ry="10" fill="#fef9c3" stroke="#FFD700" strokeWidth="2" />
+            <rect x="22" y="5" width="6" height="10" rx="3" fill="#FFD700" />
+          </svg>
+        </div>
+      </div>
       {/* Header - Redesigned for better appearance */}
       <header className="sticky top-0 z-50 bg-white shadow-lg border-b border-navy-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,12 +99,17 @@ export default function UniversityPortal() {
                 height={40}
                 className="rounded-full animate-pulse-shadow"
               />
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-navy-900">PACSMIN Portal</h1>
-                <p className="text-sm text-gray-500">Chemistry Student Hub</p>
+              {/* Desktop View */}
+              <div className="hidden sm:flex flex-col justify-center flex-grow max-w-xs ml-2">
+                <h1 className="text-xl font-bold text-navy-900 leading-tight">PACSMIN</h1>
+                <span className="text-[15px] text-gray-700 font-medium leading-tight">Philippine Association of Chemistry Students</span>
+                <span className="text-[11px] text-gray-500 font-normal leading-tight">Mindanao Chapter</span>
               </div>
-              <div className="sm:hidden">
-                <h1 className="text-lg font-bold text-navy-900">PACSMIN</h1>
+              {/* Mobile View - match desktop layout */}
+              <div className="flex flex-col sm:hidden justify-center flex-grow max-w-xs ml-2">
+                <h1 className="text-lg font-bold text-navy-900 leading-tight">PACSMIN</h1>
+                <span className="text-[13px] text-gray-700 font-medium leading-tight">Philippine Association of Chemistry Students</span>
+                <span className="text-[10px] text-gray-500 font-normal leading-tight">Mindanao Chapter</span>
               </div>
             </div>
             

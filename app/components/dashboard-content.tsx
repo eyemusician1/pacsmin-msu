@@ -52,7 +52,7 @@ function BackgroundGradientAnimation({
       interactiveRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`
     }
     move()
-  }, [tgX, tgY])
+  }, [tgX, tgY, curX, curY])
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (interactiveRef.current) {
       const rect = interactiveRef.current.getBoundingClientRect()
@@ -182,7 +182,7 @@ export function DashboardContent() {
             </p>
             {/* Chemistry Quote */}
             <p className="italic text-gold-700 text-sm sm:text-base mb-6 animate-hero-fade-in" style={{ animationDelay: '0.6s' }}>
-              "Chemistry is the melodies you can play on vibrating strings." – Michio Kaku
+              &ldquo;Chemistry is the melodies you can play on vibrating strings.&rdquo; – Michio Kaku
             </p>
             <div className="flex justify-center lg:justify-start w-full">
               <Button className="bg-gradient-to-r from-gold-500 to-navy-700 text-white hover:from-gold-600 hover:to-navy-800 transition-all duration-300 text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-7 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-cta-pulse flex items-center gap-2">
