@@ -3,10 +3,9 @@
 import { useState } from "react"
 import { Badge } from "../../components/ui/badge"
 import { Button } from "../../components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
-import { Calendar, Clock, MapPin, Users, ChevronLeft, ChevronRight, Megaphone, Lightbulb, BookOpen, LinkIcon, ShoppingBag } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
+import { Calendar, Clock, MapPin, Users, ChevronLeft, ChevronRight, Megaphone, BookOpen, LinkIcon, ShoppingBag } from 'lucide-react'
 import Image from "next/image"
-import Link from "next/link"
 
 interface FeaturedPost {
   id: number;
@@ -191,7 +190,7 @@ export function DashboardContent() {
                 <Calendar className="h-6 w-6 text-purple-500 flex-shrink-0 mt-1" />
                 <div>
                   <p className="font-semibold text-lg text-navy-900">Guest Lecture: AI Ethics in Science</p>
-                  <p className="text-sm text-gray-700">Don't miss this insightful lecture on the ethical implications of AI in scientific research.</p>
+                  <p className="text-sm text-gray-700">Don&apos;t miss this insightful lecture on the ethical implications of AI in scientific research.</p>
                   <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
                     <Users className="h-3 w-3" /> Auditorium A, Next Monday 1:00 PM
                   </p>

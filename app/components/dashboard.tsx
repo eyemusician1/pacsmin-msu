@@ -1,12 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Badge } from "../../components/ui/badge"
 import { Button } from "../../components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { Calendar, Clock, MapPin, Users, ChevronLeft, ChevronRight } from 'lucide-react' // Import Chevron icons
 import Image from "next/image"
-import Link from "next/link"
 
 interface FeaturedPost {
   id: number;

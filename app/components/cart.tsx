@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import type { Dispatch, SetStateAction } from "react"
 import { Badge } from "../../components/ui/badge"
 import { Button } from "../../components/ui/button"
 import { ShoppingCart, Plus, Minus } from 'lucide-react'
@@ -17,7 +18,7 @@ interface CartItem {
 
 interface CartProps {
   cart: CartItem[]
-  setCart: (cart: CartItem[]) => void
+  setCart: Dispatch<SetStateAction<CartItem[]>>
 }
 
 export function Cart({ cart, setCart }: CartProps) {
@@ -26,7 +27,7 @@ export function Cart({ cart, setCart }: CartProps) {
   const [showReceipt, setShowReceipt] = useState(false);
 
   const updateQuantity = (id: number, change: number) => {
-    setCart(prevCart =>
+    setCart((prevCart: CartItem[]) =>
       prevCart.map(item =>
         item.id === id
           ? { ...item, quantity: Math.max(0, item.quantity + change) }

@@ -19,7 +19,7 @@ export function AboutUsContent() {
             news, and connecting with peers and faculty.
           </p>
           <p className="text-gray-700">
-            Our goal is to support every student's journey through their chemistry education, from foundational
+            Our goal is to support every student&apos;s journey through their chemistry education, from foundational
             concepts to advanced research, preparing them for successful careers and contributions to science.
           </p>
         </CardContent>
