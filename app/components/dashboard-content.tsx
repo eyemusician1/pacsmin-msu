@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Badge } from "../../components/ui/badge"
 import { Button } from "../../components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
-import { Calendar, Clock, MapPin, Users, ChevronLeft, ChevronRight, Megaphone, BookOpen, LinkIcon, ShoppingBag } from 'lucide-react'
+import { Calendar, Clock, MapPin, Users, ChevronLeft, ChevronRight, Megaphone, BookOpen, LinkIcon, ShoppingBag, Sparkles, FlaskConical } from 'lucide-react'
 import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 interface FeaturedPost {
   id: number;
@@ -14,6 +15,92 @@ interface FeaturedPost {
   category: string;
   date: string;
   image: string;
+}
+
+// Aceternity UI BackgroundGradientAnimation (inline for now)
+function BackgroundGradientAnimation({
+  children,
+  className,
+  containerClassName,
+}: {
+  children?: React.ReactNode
+  className?: string
+  containerClassName?: string
+}) {
+  const interactiveRef = useRef<HTMLDivElement>(null)
+  const [curX, setCurX] = useState(0)
+  const [curY, setCurY] = useState(0)
+  const [tgX, setTgX] = useState(0)
+  const [tgY, setTgY] = useState(0)
+  useEffect(() => {
+    document.body.style.setProperty("--gradient-background-start", "#e0e7ff") // light navy
+    document.body.style.setProperty("--gradient-background-end", "#fef9c3") // light gold
+    document.body.style.setProperty("--first-color", "30, 64, 175") // navy
+    document.body.style.setProperty("--second-color", "253, 224, 71") // gold
+    document.body.style.setProperty("--third-color", "255, 255, 255") // white
+    document.body.style.setProperty("--fourth-color", "202, 138, 4") // deep gold
+    document.body.style.setProperty("--fifth-color", "30, 41, 59") // deep navy
+    document.body.style.setProperty("--pointer-color", "253, 224, 71") // gold
+    document.body.style.setProperty("--size", "80%")
+    document.body.style.setProperty("--blending-value", "hard-light")
+  }, [])
+  useEffect(() => {
+    function move() {
+      if (!interactiveRef.current) return
+      setCurX(curX + (tgX - curX) / 20)
+      setCurY(curY + (tgY - curY) / 20)
+      interactiveRef.current.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`
+    }
+    move()
+  }, [tgX, tgY])
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (interactiveRef.current) {
+      const rect = interactiveRef.current.getBoundingClientRect()
+      setTgX(event.clientX - rect.left)
+      setTgY(event.clientY - rect.top)
+    }
+  }
+  const [isSafari, setIsSafari] = useState(false)
+  useEffect(() => {
+    setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent))
+  }, [])
+  return (
+    <div
+      className={cn(
+        "relative overflow-hidden w-full rounded-2xl sm:rounded-3xl",
+        containerClassName
+      )}
+      onMouseMove={handleMouseMove}
+      style={{ minHeight: 'min(32rem, 80vw)' }}
+    >
+      <svg className="hidden">
+        <defs>
+          <filter id="blurMe">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+            <feBlend in="SourceGraphic" in2="goo" />
+          </filter>
+        </defs>
+      </svg>
+      <div className={cn("relative z-10", className)}>{children}</div>
+      <div
+        className={cn(
+          "gradients-container absolute inset-0 w-full h-full blur-lg -z-10 pointer-events-none",
+          isSafari ? "blur-2xl" : "[filter:url(#blurMe)_blur(40px)]"
+        )}
+      >
+        <div className="absolute [background:radial-gradient(circle_at_center,_rgb(var(--first-color))_0,_rgb(var(--first-color))_50%)_no-repeat] [mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)] animate-[moveVertical_30s_ease_infinite] opacity-100" />
+        <div className="absolute [background:radial-gradient(circle_at_center,_rgba(var(--second-color),_0.8)_0,_rgba(var(--second-color),_0)_50%)_no-repeat] [mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)] animate-[moveInCircle_20s_reverse_infinite] opacity-100" />
+        <div className="absolute [background:radial-gradient(circle_at_center,_rgba(var(--third-color),_0.8)_0,_rgba(var(--third-color),_0)_50%)_no-repeat] [mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)] animate-[moveInCircle_40s_linear_infinite] opacity-100" />
+        <div className="absolute [background:radial-gradient(circle_at_center,_rgba(var(--fourth-color),_0.8)_0,_rgba(var(--fourth-color),_0)_50%)_no-repeat] [mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)] animate-[moveHorizontal_40s_ease_infinite] opacity-70" />
+        <div className="absolute [background:radial-gradient(circle_at_center,_rgba(var(--fifth-color),_0.8)_0,_rgba(var(--fifth-color),_0)_50%)_no-repeat] [mix-blend-mode:var(--blending-value)] w-[var(--size)] h-[var(--size)] top-[calc(50%-var(--size)/2)] left-[calc(50%-var(--size)/2)] animate-[moveInCircle_20s_ease_infinite] opacity-100" />
+        <div
+          ref={interactiveRef}
+          className="absolute [background:radial-gradient(circle_at_center,_rgba(var(--pointer-color),_0.8)_0,_rgba(var(--pointer-color),_0)_50%)_no-repeat] [mix-blend-mode:var(--blending-value)] w-full h-full -top-1/2 -left-1/2 opacity-70"
+        />
+      </div>
+    </div>
+  )
 }
 
 export function DashboardContent() {
@@ -42,7 +129,7 @@ export function DashboardContent() {
       description: "Our cutting-edge spectroscopy lab is now fully operational, significantly enhancing research capabilities for all students and faculty.",
       category: "Campus News",
       date: "May 15, 2024",
-      image: "/placeholder.svg?height=500&width=1000&text=New+Lab+Equipment"
+      image: "/dashboard/spectroscopy.jpg"
     },
     {
       id: 4,
@@ -50,7 +137,7 @@ export function DashboardContent() {
       description: "Learn about Dr. Rodriguez's inspiring journey from PACSMIN to leading pharmaceutical innovations and making a global impact.",
     category: "Alumni",
       date: "May 10, 2024",
-      image: "/placeholder.svg?height=500&width=1000&text=Alumni+Spotlight"
+      image: "/dashboard/elena-rodriguez.jpg"
     }
   ];
 
@@ -69,76 +156,94 @@ export function DashboardContent() {
   const currentPost = featuredPosts[currentFeaturedPostIndex];
 
   return (
-    <div className="space-y-6 sm:space-y-12 animate-fade-in-slide-up">
-      {/* New Hero Section: Clean, Professional, and Engaging */}
-      <div className="relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-navy-100 p-4 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-12 transform transition-all duration-500 hover:scale-[1.005]">
-        <div className="flex-1 text-center lg:text-left animate-fade-in-slide-up" style={{ animationDelay: '0.2s' }}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-navy-900">
-            Welcome to <span className="text-gold-600">PACSMIN!</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-6 sm:mb-8 text-gray-700">
-            Your central hub for all things chemistry. Explore the latest updates, events, and resources tailored for your academic journey.
-          </p>
-          <Button className="bg-navy-700 text-white hover:bg-navy-800 transition-all duration-300 text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-7 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-            Explore Dashboard
-          </Button>
-        </div>
-
-        {/* Featured Posts Carousel (integrated into hero, but visually distinct) */}
-        <Card className="relative w-full lg:w-2/3 xl:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[500px] overflow-hidden group border-none shadow-2xl bg-transparent rounded-2xl">
-          <Image
-            src={currentPost.image || "/placeholder.svg"}
-            alt={currentPost.title}
-            fill
-            className="object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 ease-in-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent bg-gradient-to-b from-black/40 to-transparent rounded-2xl" />
-          
-          {/* Navigation Buttons */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute left-0.5 top-1/2 -translate-y-1/2 text-white z-10 transition-all duration-300 transform hover:scale-110 sm:bg-black/15 sm:hover:bg-black/35 sm:rounded-full sm:backdrop-blur-sm"
-            onClick={goToPreviousPost}
-            aria-label="Previous post"
-          >
-            <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-0.5 top-1/2 -translate-y-1/2 text-white z-10 transition-all duration-300 transform hover:scale-110 sm:bg-black/15 sm:hover:bg-black/35 sm:rounded-full sm:backdrop-blur-sm"
-            onClick={goToNextPost}
-            aria-label="Next post"
-          >
-            <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
-          </Button>
-
-          <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 text-white animate-fade-in-slide-up" style={{ animationDelay: '0.4s' }}>
-            <div className="space-y-4 max-w-[200px] sm:max-w-[240px] md:max-w-[280px]">
-              <Badge className="bg-gold-500 text-white text-xs px-3 py-1 rounded-full shadow-md font-medium inline-block">{currentPost.category}</Badge>
-              <div className="space-y-3">
-                <h3 className="text-sm sm:text-base md:text-lg font-bold drop-shadow-lg leading-tight">{currentPost.title}</h3>
-                <p className="text-xs sm:text-xs drop-shadow-md leading-relaxed opacity-90">{currentPost.description}</p>
-              </div>
+    <div className="relative space-y-6 sm:space-y-12 animate-fade-in-slide-up">
+      {/* Chemistry-Themed SVG Background removed for new animated background */}
+      <BackgroundGradientAnimation containerClassName="mb-8">
+        <div className="relative z-10 bg-white/90 backdrop-blur-md rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-navy-100 p-4 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-12 transform transition-all duration-500 hover:scale-[1.005]">
+          {/* Floating Atom Illustration */}
+          <div className="absolute -top-8 -left-8 sm:-top-12 sm:-left-12 z-20 animate-float">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="18" stroke="#FFD700" strokeWidth="3" fill="#FFFBEA" />
+              <ellipse cx="40" cy="40" rx="28" ry="10" stroke="#1e293b" strokeWidth="1.5" fill="none" />
+              <ellipse cx="40" cy="40" rx="10" ry="28" stroke="#1e293b" strokeWidth="1.5" fill="none" transform="rotate(60 40 40)" />
+              <ellipse cx="40" cy="40" rx="10" ry="28" stroke="#1e293b" strokeWidth="1.5" fill="none" transform="rotate(-60 40 40)" />
+              <circle cx="40" cy="22" r="3" fill="#FFD700" />
+              <circle cx="58" cy="40" r="3" fill="#FFD700" />
+              <circle cx="40" cy="58" r="3" fill="#FFD700" />
+              <circle cx="22" cy="40" r="3" fill="#FFD700" />
+            </svg>
+          </div>
+          <div className="flex-1 text-center lg:text-left animate-hero-fade-in" style={{ animationDelay: '0.2s' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-navy-900">
+              Welcome to <span className="relative text-gold-600 underline decoration-wavy underline-offset-4 animate-glow">PACS</span><span className="text-navy-900">MIN!</span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-4 sm:mb-6 text-gray-700 animate-hero-fade-in" style={{ animationDelay: '0.4s' }}>
+              Your central hub for all things chemistry. Explore the latest updates, events, and resources tailored for your academic journey.
+            </p>
+            {/* Chemistry Quote */}
+            <p className="italic text-gold-700 text-sm sm:text-base mb-6 animate-hero-fade-in" style={{ animationDelay: '0.6s' }}>
+              "Chemistry is the melodies you can play on vibrating strings." – Michio Kaku
+            </p>
+            <div className="flex justify-center lg:justify-start w-full">
+              <Button className="bg-gradient-to-r from-gold-500 to-navy-700 text-white hover:from-gold-600 hover:to-navy-800 transition-all duration-300 text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-7 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 animate-cta-pulse flex items-center gap-2">
+                <FlaskConical className="h-5 w-5 text-white animate-spin-slow" />
+                Explore Dashboard
+                <Sparkles className="h-5 w-5 text-gold-200 ml-1 animate-flicker" />
+              </Button>
             </div>
           </div>
-
-          {/* Indicators */}
-          <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 flex space-x-1.5 sm:space-x-2 z-10">
-            {featuredPosts.map((_, index) => (
-              <button
-                key={index}
-                className={`h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full transition-all duration-300 ${
-                  index === currentFeaturedPostIndex ? 'bg-gold-500 w-6 sm:w-8' : 'bg-white/50 hover:bg-white/80'
-                }`}
-                onClick={() => setCurrentFeaturedPostIndex(index)}
-                aria-label={`Go to post ${index + 1}`}
-              />
-            ))}
-          </div>
-        </Card>
-      </div>
+          {/* Featured Posts Carousel (integrated into hero, but visually distinct) */}
+          <Card className="relative w-full lg:w-2/3 xl:w-1/2 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[500px] overflow-hidden group border-none shadow-2xl bg-transparent rounded-2xl animate-hero-fade-in" style={{ animationDelay: '0.8s' }}>
+            <Image
+              src={currentPost.image || "/placeholder.svg"}
+              alt={currentPost.title}
+              fill
+              className="object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500 ease-in-out"
+            />
+            {/* Improved Overlay Gradient for Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl" />
+            {/* Navigation Buttons */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-0.5 top-1/2 -translate-y-1/2 text-white z-10 transition-all duration-300 transform hover:scale-110 sm:bg-black/15 sm:hover:bg-black/35 sm:rounded-full sm:backdrop-blur-sm"
+              onClick={goToPreviousPost}
+              aria-label="Previous post"
+            >
+              <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-0.5 top-1/2 -translate-y-1/2 text-white z-10 transition-all duration-300 transform hover:scale-110 sm:bg-black/15 sm:hover:bg-black/35 sm:rounded-full sm:backdrop-blur-sm"
+              onClick={goToNextPost}
+              aria-label="Next post"
+            >
+              <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
+            </Button>
+            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 text-white animate-hero-fade-in" style={{ animationDelay: '1s' }}>
+              <div className="space-y-4 max-w-[200px] sm:max-w-[240px] md:max-w-[280px]">
+                <Badge className="bg-gold-500 text-white text-xs px-3 py-1 rounded-full shadow-md font-medium inline-block animate-hero-fade-in" style={{ animationDelay: '1.1s' }}>{currentPost.category}</Badge>
+                <div className="space-y-3">
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold drop-shadow-lg leading-tight animate-hero-fade-in" style={{ animationDelay: '1.2s' }}>{currentPost.title}</h3>
+                  <p className="text-xs sm:text-xs drop-shadow-md leading-relaxed opacity-90 animate-hero-fade-in" style={{ animationDelay: '1.3s' }}>{currentPost.description}</p>
+                </div>
+              </div>
+            </div>
+            {/* Animated Indicators */}
+            <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 flex space-x-1.5 sm:space-x-2 z-10">
+              {featuredPosts.map((_, index) => (
+                <button
+                  key={index}
+                  className={`h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full transition-all duration-300 animate-indicator-bounce ${index === currentFeaturedPostIndex ? 'bg-gold-500 w-6 sm:w-8 shadow-lg' : 'bg-white/50 hover:bg-white/80'}`}
+                  onClick={() => setCurrentFeaturedPostIndex(index)}
+                  aria-label={`Go to post ${index + 1}`}
+                />
+              ))}
+            </div>
+          </Card>
+        </div>
+      </BackgroundGradientAnimation>
 
       {/* Main Content Area: Activity Feed & Quick Links */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
